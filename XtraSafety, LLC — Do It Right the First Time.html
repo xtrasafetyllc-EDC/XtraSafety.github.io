@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XtraSafety, LLC — Do It Right the First Time</title>
+  <meta name="description" content="XtraSafety helps organizations build compliance frameworks they can stand behind and safety cultures their teams actually want to be part of." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0d0d;
+      --black-2: #161616;
+      --black-3: #1e1e1e;
+      --gold: #C9A84C;
+      --gold-light: #e0bf77;
+      --gold-dark: #a07d30;
+      --silver: #b8b8b8;
+      --silver-light: #d8d8d8;
+      --red: #C0272D;
+      --red-dark: #9a1e23;
+      --white: #f5f4f0;
+      --white-dim: #c8c6be;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 68px;
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 2px;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo em { color: var(--gold); font-style: normal; }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--silver);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black) !important;
+      padding: 9px 22px;
+      border-radius: 4px;
+      font-weight: 500 !important;
+      letter-spacing: 0.5px !important;
+      text-transform: none !important;
+      font-size: 14px !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(201,168,76,0.04) 0px, rgba(201,168,76,0.04) 1px, transparent 1px, transparent 80px),
+        repeating-linear-gradient(0deg, rgba(201,168,76,0.04) 0px, rgba(201,168,76,0.04) 1px, transparent 1px, transparent 80px);
+      pointer-events: none;
+    }
+
+    .hero-accent {
+      position: absolute;
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 600px;
+      height: 600px;
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-accent::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border: 1px solid rgba(201,168,76,0.08);
+      border-radius: 50%;
+    }
+    .hero-accent::after {
+      content: '';
+      position: absolute;
+      inset: 80px;
+      border: 1px solid rgba(201,168,76,0.06);
+      border-radius: 50%;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+    .eyebrow-line { width: 40px; height: 1px; background: var(--red); }
+    .eyebrow-text {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--silver);
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 10vw, 130px);
+      line-height: 0.92;
+      letter-spacing: 3px;
+      color: var(--white);
+      max-width: 900px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.35s forwards;
+    }
+    .hero h1 .gold { color: var(--gold); }
+    .hero h1 .red { color: var(--red); }
+
+    .hero-tagline {
+      margin-top: 28px;
+      font-size: 18px;
+      color: var(--silver-light);
+      font-weight: 300;
+      max-width: 560px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+    .hero-tagline strong { color: var(--gold); font-weight: 500; }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      margin-top: 44px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.65s forwards;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--black);
+      padding: 15px 36px;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--silver-light);
+      padding: 14px 36px;
+      border: 1px solid rgba(184,184,184,0.3);
+      border-radius: 4px;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.9s forwards;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    .scroll-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--silver); writing-mode: vertical-rl; }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--black-2);
+      border-top: 1px solid rgba(201,168,76,0.2);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      padding: 32px 56px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      flex: 1;
+      min-width: 160px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 44px;
+      color: var(--gold);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+    .stat-label { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--silver); margin-top: 6px; }
+
+    /* SECTIONS */
+    section { padding: 100px 48px; }
+
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-eyebrow .line { width: 32px; height: 1px; background: var(--red); }
+    .section-eyebrow span { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--silver); }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 5vw, 58px);
+      letter-spacing: 2px;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .section-title .gold { color: var(--gold); }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--white-dim);
+      max-width: 500px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* SERVICES */
+    .services { background: var(--black-2); }
+
+    .services-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .service-card {
+      background: var(--black-3);
+      padding: 32px 28px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: border-color 0.25s, background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .service-card:hover { border-color: rgba(201,168,76,0.2); background: #222; }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 38px;
+      color: rgba(201,168,76,0.15);
+      line-height: 1;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .service-card h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+    .service-card p { font-size: 13px; color: var(--silver); line-height: 1.65; font-weight: 300; }
+
+    /* ABOUT */
+    .about { background: var(--black); }
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+      height: 440px;
+    }
+    .about-box-main {
+      position: absolute;
+      inset: 0;
+      background: var(--black-2);
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 36px;
+      overflow: hidden;
+    }
+    .about-box-main::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--red));
+    }
+    .about-box-accent {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 140px;
+      height: 140px;
+      border: 1px solid rgba(192,39,45,0.25);
+      z-index: -1;
+    }
+    .about-box-accent2 {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      width: 100px;
+      height: 100px;
+      border: 1px solid rgba(201,168,76,0.15);
+      z-index: -1;
+    }
+    .about-quote {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      letter-spacing: 2px;
+      color: var(--white);
+      line-height: 1.05;
+    }
+    .about-quote .gold { color: var(--gold); }
+    .about-quote-label {
+      margin-top: 16px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--silver);
+    }
+
+    .about-text p {
+      color: var(--white-dim);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 18px;
+    }
+
+    .about-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .pillar {
+      border-left: 2px solid var(--gold);
+      padding: 10px 16px;
+      background: rgba(201,168,76,0.04);
+    }
+    .pillar-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 4px; }
+    .pillar-sub { font-size: 12px; color: var(--silver); }
+
+    /* TESTIMONIALS */
+    .testimonials { background: var(--black-2); }
+    .testi-header { max-width: 1200px; margin: 0 auto 56px; }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testi-card {
+      background: var(--black-3);
+      padding: 40px 32px;
+      border: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      transition: border-color 0.25s;
+    }
+    .testi-card:hover { border-color: rgba(201,168,76,0.2); }
+
+    .testi-mark {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 80px;
+      color: rgba(201,168,76,0.12);
+      line-height: 0.7;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .testi-card blockquote {
+      font-size: 15px;
+      color: var(--silver-light);
+      line-height: 1.75;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 28px;
+    }
+
+    .testi-divider { width: 32px; height: 1px; background: var(--gold); margin-bottom: 20px; }
+
+    .testi-name { font-size: 14px; font-weight: 500; color: var(--white); }
+    .testi-role { font-size: 12px; color: var(--silver); margin-top: 3px; letter-spacing: 0.3px; }
+
+    /* CONTACT */
+    .contact { background: var(--black); }
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: var(--white-dim);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 40px;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .contact-detail-icon {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-detail-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+    .contact-detail-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--silver); }
+    .contact-detail-val { font-size: 14px; color: var(--white-dim); margin-top: 2px; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-bottom: 8px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: var(--black-2);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--white);
+      padding: 13px 16px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--gold); }
+    .field input::placeholder,
+    .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .field textarea { height: 130px; resize: vertical; }
+    .field select { cursor: pointer; color: rgba(255,255,255,0.7); }
+
+    .form-submit {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 16px 40px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.15s;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer {
+      background: var(--black-2);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 20px;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+    .footer-logo em { color: var(--gold); font-style: normal; }
+    .footer-tagline { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--silver); margin-top: 4px; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); text-align: right; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 80px; }
+      .hero-scroll { left: 24px; }
+      section { padding: 72px 24px; }
+      .services-layout { grid-template-columns: 1fr; gap: 40px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-visual { height: 300px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+      .stats-bar { flex-direction: column; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      footer { flex-direction: column; text-align: center; padding: 36px 24px; }
+      .footer-copy { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Xtra<em>Safety</em></a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact" class="nav-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-accent"></div>
+
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Safety · Compliance · Culture</span>
+    </div>
+
+    <h1>
+      Xtra<span class="gold">Safety</span>,<br>
+      <span class="red">LLC</span>
+    </h1>
+
+    <p class="hero-tagline">
+      <strong>"Do it right the first time."</strong><br>
+      We help organizations build compliance frameworks they can stand behind — and safety cultures their teams actually want to be part of.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-gold">Get Started</a>
+      <a href="#services" class="btn-ghost">Our Services</a>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item reveal">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Organizations Served</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Compliance Success Rate</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">15+</div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Core Service Areas</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services-layout">
+      <div class="reveal">
+        <div class="section-eyebrow">
+          <div class="line"></div>
+          <span>What We Do</span>
+        </div>
+        <h2 class="section-title">Comprehensive<br><span class="gold">Safety</span><br>Solutions</h2>
+        <p class="section-sub">From compliance audits to team training, we meet your organization where it is — and help it go further.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-num">01</div>
+          <h3>Safety Training & Workshops</h3>
+          <p>Engaging, interactive training that turns compliance into confidence for every level of your organization.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">02</div>
+          <h3>Compliance Consulting</h3>
+          <p>Expert guidance to navigate OSHA, industry regulations, and internal standards — without the headaches.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">03</div>
+          <h3>Safety Program Development</h3>
+          <p>Customized safety programs tailored to your industry, size, and organizational goals.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">04</div>
+          <h3>Safety Audits</h3>
+          <p>Thorough assessments that identify gaps, reduce risk, and deliver a clear roadmap to a safer workplace.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">05</div>
+          <h3>Safety Event Planning</h3>
+          <p>Safety days, awareness campaigns, and events that energize your team around a culture of safety.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">06</div>
+          <h3>Safety Products</h3>
+          <p>Curated gear, signage, kits, and materials to equip your organization with the right tools from day one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <div class="about-box-main">
+          <div class="about-box-accent"></div>
+          <div class="about-box-accent2"></div>
+          <div class="about-quote">Safety Is a<br><span class="gold">Super</span><br>power.</div>
+          <div class="about-quote-label">— The XtraSafety philosophy</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="section-eyebrow">
+          <div class="line"></div>
+          <span>About Us</span>
+        </div>
+        <h2 class="section-title">Safety Should Feel Like a<br><span class="gold">Superpower</span>,<br>Not a Burden</h2>
+        <p>At XtraSafety, LLC, we believe compliance and culture aren't opposites — they're partners. We work with organizations of all sizes to build safety programs that are rigorous where it matters and human where it counts.</p>
+        <p>Our team brings real-world experience to every engagement, combining deep regulatory knowledge with genuine enthusiasm for making safety something your team actually embraces.</p>
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-title">Rigorous Compliance</div>
+            <div class="pillar-sub">We know the regulations cold</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-title">Human-Centered</div>
+            <div class="pillar-sub">Safety people actually embrace</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-title">Real Experience</div>
+            <div class="pillar-sub">15+ years in the field</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-title">Tailored Solutions</div>
+            <div class="pillar-sub">Built for your organization</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="testi-header reveal">
+      <div class="section-eyebrow">
+        <div class="line"></div>
+        <span>What Clients Say</span>
+      </div>
+      <h2 class="section-title">Trusted by Teams Who Take<br><span class="gold">Safety Seriously</span></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <span class="testi-mark">"</span>
+        <blockquote>XtraSafety turned our compliance headache into something our team actually looks forward to. The training was engaging, practical, and exactly what we needed.</blockquote>
+        <div class="testi-divider"></div>
+        <div class="testi-name">James M.</div>
+        <div class="testi-role">Operations Director, Manufacturing Co.</div>
+      </div>
+      <div class="testi-card reveal">
+        <span class="testi-mark">"</span>
+        <blockquote>Their audit uncovered gaps we didn't even know we had. The roadmap they provided was clear, actionable, and helped us pass our inspection with flying colors.</blockquote>
+        <div class="testi-divider"></div>
+        <div class="testi-name">Sandra R.</div>
+        <div class="testi-role">HR Manager, Logistics Group</div>
+      </div>
+      <div class="testi-card reveal">
+        <span class="testi-mark">"</span>
+        <blockquote>The safety event they planned was a huge hit. It brought our teams together and made safety fun. We've seen measurable culture change since.</blockquote>
+        <div class="testi-divider"></div>
+        <div class="testi-name">David K.</div>
+        <div class="testi-role">CEO, Regional Healthcare Network</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="reveal">
+        <div class="section-eyebrow">
+          <div class="line"></div>
+          <span>Reach Out</span>
+        </div>
+        <h2 class="section-title">Let's Build a Safer<br>Workplace<br><span class="gold">Together</span></h2>
+        <p>Tell us about your organization and we'll find the right path forward. No pressure — just a conversation about how we can help.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Email</div>
+            <div class="contact-detail-val">info@xtrasafety.com</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.19 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.06 6.06l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Phone</div>
+            <div class="contact-detail-val">(916) 555-0100</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Location</div>
+            <div class="contact-detail-val">Sacramento, CA &amp; Nationwide</div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" placeholder="Jane" required />
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith" required />
+          </div>
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" placeholder="jane@company.com" required />
+        </div>
+        <div class="field">
+          <label>Organization</label>
+          <input type="text" placeholder="Your company or organization" />
+        </div>
+        <div class="field">
+          <label>Service of Interest</label>
+          <select>
+            <option value="">Select a service...</option>
+            <option>Safety Training & Workshops</option>
+            <option>Compliance Consulting</option>
+            <option>Safety Program Development</option>
+            <option>Safety Audits</option>
+            <option>Safety Event Planning</option>
+            <option>Safety Products</option>
+            <option>Multiple / Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Tell Us About Your Needs</label>
+          <textarea placeholder="Share any details about your organization's safety challenges or goals..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <div class="footer-logo">Xtra<em>Safety</em>, LLC</div>
+      <div class="footer-tagline">Do it right the first time.</div>
+    </div>
+    <div class="footer-copy">
+      &copy; 2026 XtraSafety, LLC. All rights reserved.<br>
+      Building safer workplaces, one organization at a time.
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Form handler placeholder
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = 'Message Sent!';
+      btn.style.background = '#3a7d44';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = 'Send Message →';
+        btn.style.background = '';
+        btn.style.color = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
